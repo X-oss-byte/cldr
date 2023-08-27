@@ -22,9 +22,7 @@ import os.path
 import sys
 
 def GetIndent(s):
-  for i in range(len(s)):
-    if s[i] not in " \t": return s[:i]
-  return s
+  return next((s[:i] for i in range(len(s)) if s[i] not in " \t"), s)
 
 
 # substring replacements
@@ -212,7 +210,8 @@ def ConvertFile(src, dest):
           if i < 0: break
           limit = line.find(";", i + 3)
           cp = line[i + 3:limit]
-          while len(cp) < 4: cp = "0" + cp
+          while len(cp) < 4:
+            cp = f"0{cp}"
           assert len(cp) == 4  # not handling supplementary code points
           line = line[:i] + "\\u" + cp + line[limit + 1:]
 
@@ -233,17 +232,14 @@ def ConvertFile(src, dest):
           if line.startswith(comment_indent):
             if line[len(comment_indent)] in " \t":
               # Preserve further indentation.
-              line = comment_indent + "#" + line[len(comment_indent):]
+              line = f"{comment_indent}#{line[len(comment_indent):]}"
             else:
               # Add a space after the #.
-              line = comment_indent + "# " + line[len(comment_indent):]
+              line = f"{comment_indent}# {line[len(comment_indent):]}"
           else:
             # Indent at least as much as the first line.
             line = line.lstrip()
-            if line:
-              line = comment_indent + "# " + line
-            else:
-              line = comment_indent + "#\n"
+            line = f"{comment_indent}# {line}" if line else comment_indent + "#\n"
         elif stop_comment:
           # Just output the line, do not start collecting input.
           # ICU-syntax comments end with the end of the line,
@@ -254,7 +250,7 @@ def ConvertFile(src, dest):
         elif not partial:
           # Start collecting input.
           partial = line.rstrip()
-        elif partial:
+        else:
           # Continue collecting input.
           partial += line.strip()
 

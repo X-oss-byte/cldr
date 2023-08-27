@@ -93,7 +93,7 @@ Makefile = svn:eol-style=native
 #              "type" is a regular expression string that will match a file name
 #              prop list is another list, one element per property.
 #              Each property item is a two element list, [prop name, prop value]
-file_types = list()
+file_types = []
 
 def parse_auto_props():
     aprops = svn_auto_props.splitlines()
