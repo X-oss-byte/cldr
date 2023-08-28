@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "create new" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "from new" ]
 
 jobs:
   build:
