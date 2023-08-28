@@ -1,7 +1,6 @@
 name: cldr-mvn
 job: create
 
-  pull_request:
   workflow_dispatch:
     inputs:
       git-ref:
