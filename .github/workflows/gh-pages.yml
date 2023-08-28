@@ -1,13 +1,12 @@
 name: Publish to gh-pages
 
-    branches:
       - main
       - "maint/maint-*"
     tags:
       - "release-*"
      Only run if docs change.
      TODO CLDR-15464 reenable this!!
-    paths:
+    
       - "tools/scripts/tr-archive/**"
       - "docs/**"
       - '.github/workflows/gh-pages.yml'
