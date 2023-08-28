@@ -1,6 +1,6 @@
 name: cldr-mvn
+job: create
 
-  push:
   pull_request:
   workflow_dispatch:
     inputs:
